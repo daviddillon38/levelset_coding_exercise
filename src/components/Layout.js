@@ -1,5 +1,6 @@
 import React from "react";
-import { List, ListItem, ListItemAvatar, ListItemText, Avatar, Drawer, makeStyles, Typography, Modal, TextField, MenuItem, Box } from "@material-ui/core";
+import { List, ListItem, ListItemAvatar, ListItemText, Avatar, Drawer, makeStyles, Typography, Modal, TextField, MenuItem, Box, IconButton, InputBase } from "@material-ui/core";
+import SearchIcon from '@material-ui/icons/Search';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import { useState } from 'react'
@@ -71,6 +72,7 @@ export default function Layout({ children }){
   const [image, setImage] = React.useState(data[0].thumbnail_url);
   const [birthday, setBirthday] = React.useState(data[0].birthdate);
   const [catName, setCatName] = React.useState(data[0].name);
+  const [search, setSearch] = React.useState('');
 
   const handleOpen = () => {setOpen(true);};
   const handleClose = () => setOpen(false);
@@ -84,6 +86,10 @@ export default function Layout({ children }){
 
   const handleImageChange = (event) => {
     setImage(event.target.value);
+  }
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
   }
 
   const handleCatNameChange = (event) => {
@@ -109,6 +115,14 @@ export default function Layout({ children }){
     state.thumbnail_url = image;
   }
 
+  const searchButtonClick = (search) => {
+    for(let i = 0; i <= data.length; i++){
+      if(search === data[i].name){
+        setState(data[i]);
+      }
+    }
+  }
+
  return (
    <div className={classes.root}>
      <Drawer
@@ -122,6 +136,12 @@ export default function Layout({ children }){
            Levelset Frontend Coding Exercise - David Dillon
          </Typography>
        </div>
+       <Box>
+       <TextField id="filled-basic"   placeholder={'Search'} onChange={handleSearchChange}></TextField>
+       <IconButton onClick={()=> {searchButtonClick(search)}}>
+        <SearchIcon fontSize={'small'}/>
+       </IconButton>
+      </Box>
         <List>
         <Divider component="li" />
           {data.map(item => {
