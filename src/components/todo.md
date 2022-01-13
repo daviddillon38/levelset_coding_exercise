@@ -1,5 +1,4 @@
 
-1. implement search function
-2. clean up code
-3. add comments
-4. upload finnished project
+1. clean up code
+2. add comments
+3. upload finnished project
